@@ -1,6 +1,6 @@
 {
   "name": "@chyfra/parrot-js",
-  "version": "1.0.3-beta.2",
+  "version": "1.0.4-beta.1",
   "main": "index.js",
   "repository": {
     "url": "git+https://github.com/chyfra/parrot-js.git"

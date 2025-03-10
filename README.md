@@ -185,6 +185,8 @@ ParrotJS runs (and should always run) in your local environnement to keep all yo
 - [ ] Improvements to wildcard handling (better responses?)
 - [ ] `parrot.functions.js` in TS too?
 - [ ] npx installer in a single line
+- [ ] Make parrot act like a brwoser proxy and/or start a browser instance using puppeteer or playwright
+- [ ] Session storage (store a `parrot.session.json`) that would contain the app's state (eg.: intercept mode disabled) and custom user values (like saving the auth token)
 
 ## Contribute
 

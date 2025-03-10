@@ -32,7 +32,8 @@ function matchBy(request, cache) {
  * @returns Express.request
  */
 function onBeforeRequest(request) {
-  request.headers['authorization'] = 'Bearer MY_TOP_SECRET_TOKEN';
+  // You can for example add a custom auth token
+  // request.headers['authorization'] = 'Bearer MY_TOP_SECRET_TOKEN';
   return request;
 }
 

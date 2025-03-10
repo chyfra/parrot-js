@@ -48,7 +48,7 @@ const startPostInstallConfig = async (dryRun = false) => {
     {
       type: 'text',
       name: 'PARROT_API_BASE',
-      message: 'Target host eg.(https://api.dicebear.com)',
+      message: 'Target host eg.(https://api.dicebear.com) do not add a / at the end',
       validate: (prev: string) => {
         return (
           prev.startsWith('http://') ||
@@ -56,7 +56,7 @@ const startPostInstallConfig = async (dryRun = false) => {
           'Please enter an url starting with http:// or https://'
         );
       },
-      initial: 'https://api.dicebear.com/',
+      initial: 'https://api.dicebear.com',
     },
     {
       type: 'text',
