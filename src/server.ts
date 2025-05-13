@@ -43,6 +43,14 @@ export class ParrotServer extends EventEmitter {
     return ServerConfig.overrideMode;
   }
 
+  public set skipRemote(value: boolean) {
+    ServerConfig.skipRemote = value;
+  }
+
+  public get skipRemote(): boolean {
+    return ServerConfig.skipRemote;
+  }
+
   private app = express();
   private agent: https.Agent | null = null;
 
@@ -94,6 +102,17 @@ export class ParrotServer extends EventEmitter {
     this.app.use(async (req, res, next) => {
       try {
         const cachedRequest = this.getCachedRequest(req, ServerConfig);
+        if (this.skipRemote) {
+          this.emit(
+            ParrotServerEventsEnum.LOG_WARN,
+            `[!] Skip remote is enabled, non-cached requests will be 404. To toggle, press [S].`,
+          );
+          if (cachedRequest) {
+            return this.useCachedResponse(cachedRequest, res);
+          } else {
+            return this.handleSkipRemoteNotFound(res);
+          }
+        }
         if (this.overrideMode && !this.bypassCache) {
           await this.fetchExternalAPIAndCacheResponse(
             req,
@@ -234,5 +253,10 @@ export class ParrotServer extends EventEmitter {
     }
 
     res.send(cachedRequest.responseBody);
+  }
+
+  private handleSkipRemoteNotFound(res: express.Response): void {
+    res.statusCode = 404;
+    res.send();
   }
 }

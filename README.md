@@ -182,11 +182,15 @@ ParrotJS runs (and should always run) in your local environnement to keep all yo
 - [ ] Visual/GUI/Web-server frontend tool?
 - [x] Adding a plain JSON file in the `requests.json` (gets transformed) or handled like json with ref files?
 - [x] Wildcard handling eg. `/api/v1/user/*/settings`
+- [x] Add skip fetch remote mode (cache only)
+- [ ] Add custom user function for skip mode in parrot.functions.js
 - [ ] Improvements to wildcard handling (better responses?)
 - [ ] `parrot.functions.js` in TS too?
 - [ ] npx installer in a single line
 - [ ] Make parrot act like a brwoser proxy and/or start a browser instance using puppeteer or playwright
 - [ ] Session storage (store a `parrot.session.json`) that would contain the app's state (eg.: intercept mode disabled) and custom user values (like saving the auth token)
+- [ ] Reconfiguration wizard through npm to reconfigure the `.env` file
+- [ ] Override mode: don't override wildcards
 
 ## Contribute
 

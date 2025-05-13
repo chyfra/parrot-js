@@ -50,7 +50,9 @@ try {
     left: 0,
     width: '100%',
     height: 1,
-    content: 'q: [Q]uit | i: [I]ntercept | o: [O]verride | c: [C]lean orphans',
+    content:
+      // eslint-disable-next-line max-len
+      'q: [Q]uit | i: [I]ntercept | o: [O]verride | c: [C]lean orphans | s: [S]kip Remote',
     style: {
       fg: 'white',
       bg: 'blue',
@@ -88,6 +90,11 @@ try {
       addContentLine(`{red-fg}${text}{/}`, content, screen);
     },
   );
+
+  parrotServerInstance.on(ParrotServerEventsEnum.LOG_WARN, (text: string) => {
+    logger.debug(`Server is reporting a warning ${text}`);
+    addContentLine(`{yellow-fg}${text}{/}`, content, screen);
+  });
 
   parrotServerInstance.on(ParrotServerEventsEnum.SERVER_STOP, () => {
     logger.debug(`Server is stopping.`);
@@ -158,6 +165,20 @@ try {
     }
     screen.render();
     addContentLine(`{bold}${interceptStateMessage}{/}`, content, screen);
+  });
+
+  screen.key(['s', 'S'], () => {
+    let skipRemoteStateMessage = `[!] Skip remote is `;
+    parrotServerInstance.skipRemote = !parrotServerInstance.skipRemote;
+    if (parrotServerInstance.skipRemote) {
+      skipRemoteStateMessage += '{yellow-bg}{black-fg}ENABLED !{/}';
+      logger.debug(`User enabled skip remote mode.`);
+    } else {
+      skipRemoteStateMessage += '{green-bg}{black-fg}DISABLED !{/}';
+      logger.debug(`User disabled skip remote mode.`);
+    }
+    screen.render();
+    addContentLine(`{bold}${skipRemoteStateMessage}{/}`, content, screen);
   });
 } catch (e: unknown) {
   logger.log('error', 'Parrot crashed! Something went terribly wrong.', e);

@@ -70,6 +70,7 @@ class ParrotConfig implements Config {
   baseUrl = process.env['PARROT_API_BASE'] || 'http://localhost';
   bypassCache = process.argv.find((v) => v === 'bypass') ? true : false;
   overrideMode = false;
+  skipRemote = false;
   isHttps = this.baseUrl.includes('https') || false;
   host = `http${this.isHttps ? 's' : ''}://localhost`;
   rejectUnauthorized =
