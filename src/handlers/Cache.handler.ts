@@ -4,7 +4,6 @@ import fs from 'fs-extra';
 import http from 'http';
 import https from 'https';
 
-import { nanoid } from 'nanoid';
 import { ParrotServerEventsEnum } from '../consts/ParrotServerEvents.enum';
 import { logger } from '../helpers/Logger';
 import { CachedRequest } from '../interfaces/CachedRequest.interface';
@@ -58,12 +57,22 @@ export class CacheHandler {
     return null;
   }
 
+  // Replace nanoid with a simple implementation for generating human-readable IDs
+  private generateHumanReadableId(length: number): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  }
+
   public saveCacheRequest(response: AxiosResponse, cachedRequest?: CachedRequest | null) {
     let requestId = '';
     if (cachedRequest?.id) {
       requestId = cachedRequest.id;
     } else {
-      requestId = nanoid(5);
+      requestId = this.generateHumanReadableId(5);
     }
 
     const responseFilePath = this.createResponseBodyFile(response, requestId);
